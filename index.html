@@ -2,9 +2,11 @@
 	<head>
 		<script>
 			function checkSequence(){
+				//read the input values
 				var searchStr = document.getElementById('read').value;
 				var sequence = document.getElementById('sequence').value;
 
+				//validate the input values	
 				var sequencelength = sequence.length;
 				if(sequencelength != 3){
 					alert('Enter atleat 3 sequence characters');
@@ -15,15 +17,13 @@
 					alert('Search string is required');
 					return;
 				}
-				var output = [];
-				var sequenceCount = 0;
-				var initialFirstStartIndex = 0;
-				var initialSecondStartIndex = initialFirstStartIndex + 1;
-				var initialThirdStartIndex = initialSecondStartIndex + 1;
-				var firstserchoccurance = 0;
-				var secondserchoccureance = 1;
-				var thirdserchoccureance = 2;
-				var reachEnd = 0;
+				
+				//Initialize the start indexes and sequence character occurances
+				var output = [],sequenceCount = 0,reachEnd = 0;
+				var initialFirstStartIndex = 0,initialSecondStartIndex = initialFirstStartIndex + 1,initialThirdStartIndex = initialSecondStartIndex + 1;
+				var firstserchoccurance = 0,secondserchoccureance = 1,thirdserchoccureance = 2;
+				
+				/*start - Logic to find the sequence count*/
 				while(reachEnd != (searchStrlength-1)){
 					for(var i=initialFirstStartIndex;i<searchStrlength;i++){
 						reachEnd = i;
@@ -75,10 +75,12 @@
 						
 					}
 				}
+				/*end - Logic to find the sequence count*/
 				
+				/*Alert the sequence count*/
 				alert(sequenceCount);
 			}
-
+	
 			function isStackfull(ouput,sequencelength){
 				if(ouput.length == sequencelength){
 					return true;
