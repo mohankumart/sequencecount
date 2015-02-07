@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<script>
+			function checkSequence(){
+				var searchStr = document.getElementById('read').value;
+				var sequence = document.getElementById('sequence').value;
+
+				var sequencelength = sequence.length;
+				if(sequencelength != 3){
+					alert('Enter atleat 3 sequence characters');
+					return;
+				}
+				var searchStrlength = searchStr.length;
+				if(searchStrlength == 0){
+					alert('Search string is required');
+					return;
+				}
+				var output = [];
+				var sequenceCount = 0;
+				var initialFirstStartIndex = 0;
+				var initialSecondStartIndex = initialFirstStartIndex + 1;
+				var initialThirdStartIndex = initialSecondStartIndex + 1;
+				var firstserchoccurance = 0;
+				var secondserchoccureance = 1;
+				var thirdserchoccureance = 2;
+				var reachEnd = 0;
+				while(reachEnd != (searchStrlength-1)){
+					for(var i=initialFirstStartIndex;i<searchStrlength;i++){
+						reachEnd = i;
+						if(searchStr.charAt(i) == sequence.charAt(0)){
+							firstserchoccurance = i;
+							output.push(searchStr.charAt(i));
+							initialSecondStartIndex = initialFirstStartIndex + 1;
+							for(var j=initialSecondStartIndex;j<searchStrlength;j++){
+								if(searchStr.charAt(j) == sequence.charAt(1)){
+									secondserchoccureance = j;
+									output.push(searchStr.charAt(j));
+									initialThirdStartIndex = initialSecondStartIndex + 1;
+									for(var k=initialThirdStartIndex;k<searchStrlength;k++){
+										if(searchStr.charAt(k) == sequence.charAt(2)){
+											thirdserchoccureance = k;
+											output.push(searchStr.charAt(k));
+											if(isStackfull(output,sequencelength)){
+												if(isMatch(output,sequence)){
+													sequenceCount += 1;	
+												}
+											}
+											output.length = 2;
+											initialThirdStartIndex = thirdserchoccureance + 1;
+										}else{
+											initialThirdStartIndex = initialThirdStartIndex + 1;
+											thirdserchoccureance = initialThirdStartIndex;
+										}
+									}
+									
+									output.length = 1;
+									initialSecondStartIndex = secondserchoccureance + 1;
+									initialThridStartIndex = initialSecondStartIndex + 1;
+								}else{
+									initialSecondStartIndex = initialSecondStartIndex + 1;
+									initialThirdStartIndex = initialSecondStartIndex + 1;
+									secondserchoccureance = initialSecondStartIndex + 1;
+								}
+							}
+							output.length = 0;
+							initialFirstStartIndex = firstserchoccurance + 1;
+							initialSecondStartIndex = initialFirstStartIndex + 1;
+							initialThirdStartIndex = initialSecondStartIndex + 1;
+						}else{
+							initialFirstStartIndex = initialFirstStartIndex + 1;
+							initialSecondStartIndex = initialFirstStartIndex + 1;
+							initialThirdStartIndex = initialSecondStartIndex + 1;
+							firstserchoccurance = initialFirstStartIndex + 1;
+						}
+						
+					}
+				}
+				
+				alert(sequenceCount);
+			}
+
+			function isStackfull(ouput,sequencelength){
+				if(ouput.length == sequencelength){
+					return true;
+				}else{
+					return false;
+				}
+			}
+
+			function isMatch(output,sequence){
+				if(output.join('') == sequence){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		</script>
+		<style>
+			.marTop20 {
+				margin-top:10px;
+			}
+		</style>
+	</head>
+	<body>
+		<label>Input:</label><input type="text" id="read"/>
+		<label>Sequence:</label><input type="text" id="sequence"/>
+		<div class="marTop20">
+			<input type="button" onclick="checkSequence()" value="Find"/>
+		</div>
+	</body>
+</html>
